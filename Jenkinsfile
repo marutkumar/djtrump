@@ -1,15 +1,15 @@
 pipeline {
     agent any
-
+    environment { 
+        CC = 'clang'
+    }
     stages {
-        stage('Deploy') {
-            when {
-              expression {
-                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
-              }
+        stage('Example') {
+            environment { 
+                DEBUG_FLAGS = '-g'
             }
             steps {
-                sh 'make publish'
+                sh 'printenv'
             }
         }
     }
