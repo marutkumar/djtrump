@@ -1,9 +1,14 @@
 pipeline {
-    agent { docker 'python:3.5.1' }
+    agent any
+
     stages {
-        stage('build') {
+        stage('Test') {
             steps {
-                sh 'python --version'
+                /* `make check` returns non-zero on test failures,
+                * using `true` to allow the Pipeline to continue nonetheless
+                */
+                sh 'make check || true' 
+                junit '**/target/*.xml' 
             }
         }
     }
